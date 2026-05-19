@@ -31,11 +31,17 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedButton1();
+
 	BOOL nameradio;
 	BOOL namecheck1;
 	BOOL namecheck2;
 	BOOL namecheck3;
 	BOOL namecheck4;
+
+	BOOL chaeckall;
+	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
+
+	afx_msg void OnBnClickedCheckall();
+	afx_msg void OnCommandRange(UINT id);
 };

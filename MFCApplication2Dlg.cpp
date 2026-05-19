@@ -8,6 +8,7 @@
 #include "MFCApplication2Dlg.h"
 #include "afxdialogex.h"
 #include "m_radio.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -23,6 +24,7 @@ CMFCDlg::CMFCDlg(CWnd* pParent /*=nullptr*/)
 	, namecheck2(FALSE)
 	, namecheck3(FALSE)
 	, namecheck4(FALSE)
+	, chaeckall(FALSE)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -35,6 +37,7 @@ void CMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK2, namecheck2);
 	DDX_Check(pDX, IDC_CHECK3, namecheck3);
 	DDX_Check(pDX, IDC_CHECK4, namecheck4);
+	DDX_Check(pDX, IDC_CHECKall, chaeckall);
 }
 
 BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
@@ -42,6 +45,8 @@ BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CMFCDlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFCDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_CHECKall, &CMFCDlg::OnBnClickedCheckall)
+	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK4, OnCommandRange)
 END_MESSAGE_MAP()
 
 
@@ -118,7 +123,39 @@ void CMFCDlg::OnBnClickedButton2()
 			GetDlgItemTextW(CID, temp);
 			result += temp + L" ";
 		}
-    }
+    }	
     MessageBoxW(result);
 	// TODO: 在此添加控件通知处理程序代码
 }
+
+void CMFCDlg::OnBnClickedCheckall()
+{
+	UpdateData(TRUE);
+	namecheck1 = chaeckall;
+	namecheck2 = chaeckall;
+	namecheck3 = chaeckall;
+	namecheck4 = chaeckall;
+	UpdateData(FALSE);
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+void CMFCDlg::OnCommandRange(UINT id)
+{
+    //MessageBoxW(L"选项发生改变");
+	UpdateData(TRUE);
+    int count = 0;
+	count += namecheck1;
+	count += namecheck2;
+	count += namecheck3;
+	count += namecheck4;
+	if (count == 4)
+	{
+		chaeckall = 1;
+	}
+	else
+	{
+		chaeckall = 0;
+	}
+	UpdateData(FALSE);
+}
+
