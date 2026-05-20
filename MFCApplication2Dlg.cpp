@@ -8,6 +8,9 @@
 #include "MFCApplication2Dlg.h"
 #include "afxdialogex.h"
 #include "m_radio.h"
+#include"CSubDlg1.h"
+#include"CSubDlg2.h"
+#include"CSubDlg3.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,6 +45,8 @@ void CMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_password, m_password);
 	DDX_Control(pDX, IDC_PROGRESS3, m_progers);
 	DDX_Control(pDX, IDC_SLIDER1, m_slider);
+	DDX_Control(pDX, IDC_COMBO1, m_combo1);
+	DDX_Control(pDX, IDC_TAB1, m_tab);
 }
 
 BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
@@ -54,6 +59,8 @@ BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON3, &CMFCDlg::OnBnClickedlogin)
 	ON_WM_HSCROLL()
 	ON_WM_TIMER()
+	ON_BN_CLICKED(IDC_BUTTON4, &CMFCDlg::OnBnClickedButton4)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CMFCDlg::OnTcnSelchangeTab1)
 END_MESSAGE_MAP()
 
 
@@ -69,7 +76,30 @@ BOOL CMFCDlg::OnInitDialog()
 	m_slider.SetRange(0, 100);
 	m_progers.SetPos(0);
 	m_progers.SetStep(5);
-	SetTimer(0x111, 100, NULL);
+	SetTimer(0x11, 100, NULL);
+    m_combo1.InsertString(0,L"选项一");
+    m_combo1.InsertString(1,L"选项二");
+	m_combo1.InsertString(2,L"选项三");
+    m_tab.InsertItem(0, L"标签一");
+	m_tab.InsertItem(1, L"标签二");
+	m_tab.InsertItem(2, L"标签三");
+	dlg[0] = new CSubDlg1();
+	dlg[1] = new CSubDlg2();
+	dlg[2] = new CSubDlg3();
+	dlg[0]->Create(IDD_DIALOG1, &m_tab);
+	dlg[1]->Create(IDD_DIALOG2, &m_tab);
+	dlg[2]->Create(IDD_DIALOG3, &m_tab);
+
+	CRect crect = { 0 };
+	m_tab.GetClientRect(&crect);
+	crect.DeflateRect(8, 35, 10, 10);
+	for (int i = 0; i < 3; i++)
+	{
+		dlg[i]->MoveWindow(crect);
+	}
+
+	dlg[0]->ShowWindow(SW_SHOWNORMAL);
+
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
@@ -207,6 +237,33 @@ void CMFCDlg::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
-	m_progers.StepIt();
+	//m_progers.StepIt();
 	CDialog::OnTimer(nIDEvent);
+}
+
+void CMFCDlg::OnBnClickedButton4()
+{
+	CString str;
+    m_combo1.GetWindowTextW(str);
+    MessageBoxW(str);
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+void CMFCDlg::OnTcnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	// TODO: 在此添加控件通知处理程序代码
+	int idex = m_tab.GetCurSel();
+	for (int i = 0; i < 3; i++)
+	{
+		if (idex == i)
+		{
+			dlg[i]->ShowWindow(SW_SHOWNORMAL);
+
+		}
+		else
+		{
+			dlg[i]->ShowWindow(SW_HIDE);
+
+		}
+	}
 }

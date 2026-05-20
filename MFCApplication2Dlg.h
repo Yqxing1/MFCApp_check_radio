@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include"resource.h"
 
 // CMFCDlg 对话框
 class CMFCDlg : public CDialog
@@ -37,11 +37,9 @@ public:
 	BOOL namecheck2;
 	BOOL namecheck3;
 	BOOL namecheck4;
-
 	BOOL chaeckall;
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
-
 	afx_msg void OnBnClickedCheckall();
 	afx_msg void OnCommandRange(UINT id);
 	afx_msg void OnBnClickedlogin();
@@ -51,4 +49,9 @@ public:
 	CSliderCtrl m_slider;
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CComboBox m_combo1;
+	afx_msg void OnBnClickedButton4();
+	CTabCtrl m_tab;
+	CDialogEx* dlg[3] = { 0 };
+	afx_msg void OnTcnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult);
 };

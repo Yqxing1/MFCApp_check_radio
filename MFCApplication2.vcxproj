@@ -183,6 +183,9 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CSubDlg1.h" />
+    <ClInclude Include="CSubDlg2.h" />
+    <ClInclude Include="CSubDlg3.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCApplication2.h" />
     <ClInclude Include="MFCApplication2Dlg.h" />
@@ -192,6 +195,9 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CSubDlg1.cpp" />
+    <ClCompile Include="CSubDlg2.cpp" />
+    <ClCompile Include="CSubDlg3.cpp" />
     <ClCompile Include="MFCApplication2.cpp" />
     <ClCompile Include="MFCApplication2Dlg.cpp" />
     <ClCompile Include="m_radio.cpp" />
