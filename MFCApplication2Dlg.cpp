@@ -38,6 +38,8 @@ void CMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK3, namecheck3);
 	DDX_Check(pDX, IDC_CHECK4, namecheck4);
 	DDX_Check(pDX, IDC_CHECKall, chaeckall);
+	DDX_Control(pDX, IDC_user, m_username);
+	DDX_Control(pDX, IDC_password, m_password);
 }
 
 BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
@@ -47,6 +49,7 @@ BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFCDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_CHECKall, &CMFCDlg::OnBnClickedCheckall)
 	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK4, OnCommandRange)
+	ON_BN_CLICKED(IDC_login, &CMFCDlg::OnBnClickedlogin)
 END_MESSAGE_MAP()
 
 
@@ -55,7 +58,9 @@ END_MESSAGE_MAP()
 BOOL CMFCDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-
+	m_username.SetLimitText(10);
+	m_password.SetLimitText(8);
+	m_password.SetPasswordChar('/');
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
@@ -158,4 +163,23 @@ void CMFCDlg::OnCommandRange(UINT id)
 	}
 	UpdateData(FALSE);
 }
+
+
+void CMFCDlg::OnBnClickedlogin()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString username, password;
+	m_username.GetWindowText(username);
+	m_password.GetWindowText(password);
+
+	if (username.IsEmpty())
+	{
+		MessageBoxW(L"用户名不能为空");
+	}
+	else if(password.IsEmpty())
+	{
+		MessageBoxW(L"密码不能为空");
+	}	
+}
+
 

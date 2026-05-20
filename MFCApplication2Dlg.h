@@ -44,4 +44,7 @@ public:
 
 	afx_msg void OnBnClickedCheckall();
 	afx_msg void OnCommandRange(UINT id);
+	afx_msg void OnBnClickedlogin();
+	CEdit m_username;
+	CEdit m_password;
 };
