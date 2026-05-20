@@ -47,6 +47,7 @@ void CMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SLIDER1, m_slider);
 	DDX_Control(pDX, IDC_COMBO1, m_combo1);
 	DDX_Control(pDX, IDC_TAB1, m_tab);
+	DDX_Control(pDX, IDC_LIST1, m_list);
 }
 
 BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
@@ -61,6 +62,8 @@ BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_BUTTON4, &CMFCDlg::OnBnClickedButton4)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CMFCDlg::OnTcnSelchangeTab1)
+	ON_NOTIFY(NM_RCLICK, IDC_LIST1, &CMFCDlg::OnNMRClickList1)
+	ON_COMMAND(ID_32771, &CMFCDlg::Onclick)
 END_MESSAGE_MAP()
 
 
@@ -99,6 +102,25 @@ BOOL CMFCDlg::OnInitDialog()
 	}
 
 	dlg[0]->ShowWindow(SW_SHOWNORMAL);
+	imagelist.Create(24,24, ILC_COLOR32,3,0);
+	imagelist.Add(LoadIconW(NULL, IDI_APPLICATION));
+	imagelist.Add(LoadIconW(NULL, IDI_ERROR));
+	imagelist.Add(LoadIconW(NULL, IDI_ASTERISK));
+
+	m_list.SetImageList(&imagelist,LVSIL_SMALL);
+
+	m_list.SetExtendedStyle(LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT | LVS_EX_CHECKBOXES);
+	m_list.InsertColumn(0,L"程序名称", LVCFMT_LEFT,100,-1);
+	m_list.InsertColumn(1, L"进程ID", LVCFMT_LEFT, 100, -1);
+	m_list.InsertColumn(2, L"描述信息", LVCFMT_LEFT, 100, -1);
+
+	m_list.InsertItem(0, L"QQ.exe",0);
+	m_list.SetItemText(0, 1, L"0x12121");
+	m_list.SetItemText(0, 2, L"这个是聊天软件");
+
+	m_list.InsertItem(1, L"微信.exe",1);
+	m_list.SetItemText(1, 1, L"0x12221");
+	m_list.SetItemText(1 ,2, L"这个是聊天软件");
 
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
@@ -266,4 +288,24 @@ void CMFCDlg::OnTcnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult)
 
 		}
 	}
+}
+
+
+void CMFCDlg::OnNMRClickList1(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	POINT point{ 0 };
+	GetCursorPos(&point);
+	CMenu menu;
+	menu.LoadMenuW(IDR_MENU1);
+	CMenu* pmenu = menu.GetSubMenu(0);
+	pmenu->TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, this);
+	*pResult = 0;
+}
+
+void CMFCDlg::Onclick()
+{
+	MessageBox(L"123");
+	// TODO: 在此添加命令处理程序代码
 }

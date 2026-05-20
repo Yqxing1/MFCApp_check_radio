@@ -54,4 +54,8 @@ public:
 	CTabCtrl m_tab;
 	CDialogEx* dlg[3] = { 0 };
 	afx_msg void OnTcnSelchangeTab1(NMHDR* pNMHDR, LRESULT* pResult);
+	CListCtrl m_list;
+	CImageList imagelist;
+	afx_msg void OnNMRClickList1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void Onclick();
 };

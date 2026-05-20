@@ -27,6 +27,7 @@ public:
 // 实现
 
 	DECLARE_MESSAGE_MAP()
+	
 };
 
 extern CMFCApp theApp;
