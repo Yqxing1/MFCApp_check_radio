@@ -47,4 +47,8 @@ public:
 	afx_msg void OnBnClickedlogin();
 	CEdit m_username;
 	CEdit m_password;
+	CProgressCtrl m_progers;
+	CSliderCtrl m_slider;
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };

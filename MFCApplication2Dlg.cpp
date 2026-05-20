@@ -40,6 +40,8 @@ void CMFCDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECKall, chaeckall);
 	DDX_Control(pDX, IDC_user, m_username);
 	DDX_Control(pDX, IDC_password, m_password);
+	DDX_Control(pDX, IDC_PROGRESS3, m_progers);
+	DDX_Control(pDX, IDC_SLIDER1, m_slider);
 }
 
 BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
@@ -49,7 +51,9 @@ BEGIN_MESSAGE_MAP(CMFCDlg, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMFCDlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_CHECKall, &CMFCDlg::OnBnClickedCheckall)
 	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK4, OnCommandRange)
-	ON_BN_CLICKED(IDC_login, &CMFCDlg::OnBnClickedlogin)
+	ON_BN_CLICKED(IDC_BUTTON3, &CMFCDlg::OnBnClickedlogin)
+	ON_WM_HSCROLL()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -61,6 +65,11 @@ BOOL CMFCDlg::OnInitDialog()
 	m_username.SetLimitText(10);
 	m_password.SetLimitText(8);
 	m_password.SetPasswordChar('/');
+	m_progers.SetRange(0, 100);
+	m_slider.SetRange(0, 100);
+	m_progers.SetPos(0);
+	m_progers.SetStep(5);
+	SetTimer(0x111, 100, NULL);
 	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
@@ -183,3 +192,21 @@ void CMFCDlg::OnBnClickedlogin()
 }
 
 
+
+void CMFCDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	UpdateData();
+
+	m_progers.SetPos(m_slider.GetPos());
+	UpdateData(FALSE);
+	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void CMFCDlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	m_progers.StepIt();
+	CDialog::OnTimer(nIDEvent);
+}
